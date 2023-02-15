@@ -1,0 +1,34 @@
+{
+  "name": "resolver-xml-generator",
+  "version": "1.0.0",
+  "description": "A contest data converter generates an XML file that is accepted by the ICPC resolver tool.",
+  "main": "build/index.js",
+  "scripts": {
+    "start:dev": "nodemon src/index.ts",
+    "start": "ts-node ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acmASCIS/resolver-xml-generator.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/acmASCIS/resolver-xml-generator/issues"
+  },
+  "homepage": "https://github.com/acmASCIS/resolver-xml-generator#readme",
+  "devDependencies": {
+    "@eslint/create-config": "^0.4.2",
+    "@types/node": "^18.13.0",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "eslint": "^8.34.0",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5"
+  }
+}
