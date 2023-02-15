@@ -1,6 +1,6 @@
 {
   "name": "resolver-xml-generator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A contest data converter generates an XML file that is accepted by the ICPC resolver tool.",
   "bin": "build/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "package": "pkg . --out-path ./build",
     "clean": "rm -rf ./build",
     "prerelease": "npm run package",
-    "release": "release-it"
+    "release": "release-it --github.assets=build/* --no-github.draft"
   },
   "repository": {
     "type": "git",
