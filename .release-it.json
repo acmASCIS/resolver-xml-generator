@@ -1,9 +1,16 @@
 {
+  "npm": {
+    "publish": false
+  },
   "git": {
+    "commit": true,
+    "tag": true,
+    "push": true,
     "commitMessage": "chore: release v${version}"
   },
   "github": {
     "release": true,
-    "web": true
+    "web": true,
+    "assets": ["build/*"]
   }
 }
