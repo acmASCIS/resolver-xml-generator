@@ -1,6 +1,6 @@
 {
   "name": "resolver-xml-generator",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A contest data converter generates an XML file that is accepted by the ICPC resolver tool.",
   "bin": "build/index.js",
   "scripts": {
