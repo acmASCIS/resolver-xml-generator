@@ -3,6 +3,7 @@
     "publish": false
   },
   "git": {
+    "requireCleanWorkingDir": false,
     "commitMessage": "chore: release v${version}"
   },
   "github": {
