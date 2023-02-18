@@ -12,8 +12,7 @@ export const problemFormat = async(problems:Problem[])=>{
         </problem>`;
         
         
-        str+=currentProblemFormat;
-0       
+        str+=currentProblemFormat;       
     }
    
     
