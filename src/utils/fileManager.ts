@@ -8,7 +8,7 @@ export const WriteToXmlFile = async (fileName: string, datToBeWritten: string) =
 
     try {
         const logger = fs.createWriteStream(`${path}/${fileName}.xml`, {
-            flags: 'a',
+            flags: 'w',
         });
         logger.write(datToBeWritten);
     } catch (err) {
