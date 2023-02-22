@@ -13,7 +13,7 @@
     "clean": "rm -rf ./build",
     "prerelease": "npm run package",
     "release": "release-it",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts ."
+    "lint": "eslint --ignore-path .eslintignore --fix src/"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,9 @@
   "homepage": "https://github.com/acmASCIS/resolver-xml-generator#readme",
   "devDependencies": {
     "@eslint/create-config": "^0.4.2",
+    "@types/lodash": "^4.14.191",
     "@types/node": "^18.13.0",
+    "@types/xml": "^1.0.8",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "eslint": "^8.34.0",
@@ -45,7 +47,10 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "commander": "^10.0.0"
+    "@acmascis/codeforces-client": "github:acmascis/codeforces-client",
+    "commander": "^10.0.0",
+    "lodash": "^4.17.21",
+    "xml": "^1.0.1"
   },
   "git": {
     "commitMessage": "chore: release v${version}"
