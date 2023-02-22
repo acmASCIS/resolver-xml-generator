@@ -6,22 +6,24 @@ import { Standings } from '@acmascis/codeforces-client/build/interfaces/standing
 import { Submission } from '@acmascis/codeforces-client/build/interfaces/submission.interface';
 
 let id = 0;
-const awards: { [id: number]: { teamId: number; citation: string } } = {};
-
-export const GetAwards = async (
+export const getAwards = async (
     standings: Standings,
     problems: Problem[],
     handlesIds: { [handle: string]: number },
     submissions: Submission[],
 ) => {
-    await getFirstTwo(handlesIds, submissions);
-    await getSecondTwo(handlesIds, submissions);
-    await getFirstToSolve(problems, handlesIds, submissions);
-    await getMedals(standings, handlesIds);
+    const awards: { [id: number]: { teamId: number; citation: string } } =
+    {
+        ...getFirstTwo(handlesIds, submissions),
+        ...getSecondTwo(handlesIds, submissions),
+        ...getFirstToSolve(problems, handlesIds, submissions),
+        ...getMedals(standings, handlesIds),
+    };
     return awards;
 };
 
-const getFirstTwo = async (handlesIds: { [handle: string]: number }, submissions: Submission[]) => {
+const getFirstTwo = (handlesIds: { [handle: string]: number }, submissions: Submission[]) => {
+    const awards: { [id: number]: { teamId: number; citation: string } } = [];
     const sortedSubmissions = _.sortBy(submissions, ['relativeTimeSeconds', 'creationTimeSeconds']);
 
     const extremeProgrammerHandle = _.find(
@@ -35,9 +37,11 @@ const getFirstTwo = async (handlesIds: { [handle: string]: number }, submissions
         (data) => data.author.participantType === 'CONTESTANT' && data.verdict === 'OK',
     )?.author.members[0].handle;
     awards[++id] = { teamId: handlesIds[steadfastGuruHandle!], citation: 'Steadfast Guru' };
+    return awards;
 };
 
-const getSecondTwo = async (handlesIds: { [handle: string]: number }, submissions: Submission[]) => {
+const getSecondTwo = (handlesIds: { [handle: string]: number }, submissions: Submission[]) => {
+    const awards: { [id: number]: { teamId: number; citation: string } } = [];
     const contestantsStatus = _.filter(submissions, (status) => status.author.participantType === 'CONTESTANT');
     const statusGroupedByHandles = _.groupBy(contestantsStatus, (status) => status.author.members[0].handle);
     let solidContestant = '',
@@ -70,13 +74,15 @@ const getSecondTwo = async (handlesIds: { [handle: string]: number }, submission
         teamId: handlesIds[relentlessContestant!],
         citation: `Relentless programmer With ${maxTrials} Submissions`,
     };
+    return awards;
 };
 
-const getFirstToSolve = async (
+const getFirstToSolve = (
     problems: Problem[],
     handlesIds: { [handle: string]: number },
     submissions: Submission[],
 ) => {
+    const awards: { [id: number]: { teamId: number; citation: string } } = [];
     const problemsIndex: string[] = [];
     problems.forEach((problem) => problemsIndex.push(problem.index));
 
@@ -93,9 +99,11 @@ const getFirstToSolve = async (
             citation: `First to solve problem ${index}`,
         };
     });
+    return awards;
 };
 
-const getMedals = async (standings: Standings, handlesIds: { [handle: string]: number }) => {
+const getMedals = (standings: Standings, handlesIds: { [handle: string]: number }) => {
+    const awards: { [id: number]: { teamId: number; citation: string } } = [];
     const standing = _.filter(standings.rows, (row) => row.party.participantType === 'CONTESTANT');
     const goldMedalHandle = standing[0].party.members[0].handle;
     const silverMedalHandle = standing[1].party.members[0].handle;
@@ -103,4 +111,5 @@ const getMedals = async (standings: Standings, handlesIds: { [handle: string]: n
     awards[++id] = { teamId: handlesIds[goldMedalHandle!], citation: 'Gold Medalist' };
     awards[++id] = { teamId: handlesIds[silverMedalHandle!], citation: 'Silver Medalist' };
     awards[++id] = { teamId: handlesIds[bronzeMedalHandle!], citation: 'Bronze Medalist' };
+    return awards;
 };

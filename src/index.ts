@@ -1,14 +1,13 @@
 import { Command } from 'commander';
 import CodeforcesClient from '@acmascis/codeforces-client';
 
-import { GetAllProblems } from './services/problems';
+import { getAllProblems } from './services/problems';
 import { getStatusData } from './services/status';
 import { generateContestXML } from './xmlGenerator/contestXML';
-import { GetAwards } from './services/awards';
+import { getAwards } from './services/awards';
 import { WriteToXmlFile } from './utils/fileManager';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const main = (async function () {
+(async function () {
     const program = new Command();
 
     program
@@ -20,9 +19,9 @@ const main = (async function () {
     const { key, secret, contest } = program.opts();
     const client = new CodeforcesClient(key, secret);
 
-    const { standings, problems } = await GetAllProblems(client, contest);
+    const { standings, problems } = await getAllProblems(client, contest);
     const { handlesIds, submissions } = await getStatusData(client, contest);
-    const awards = await GetAwards(standings, problems, handlesIds, submissions);
+    const awards = await getAwards(standings, problems, handlesIds, submissions);
     const contestXML = await generateContestXML(problems, handlesIds, submissions, awards);
     WriteToXmlFile('contest', contestXML);
 })();

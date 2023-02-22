@@ -1,31 +1,29 @@
 import _ from 'lodash';
 import CodeforcesClient from '@acmascis/codeforces-client';
-import { ApiResponse } from '@acmascis/codeforces-client/build/interfaces/api-response.interface';
 import { Submission } from '@acmascis/codeforces-client/build/interfaces/submission.interface';
 
 export const getStatusData = async (client: CodeforcesClient, contestId: string) => {
     const contestStatus = await client.contest.status({ contestId: contestId });
-    const handlesIds = await getHandles(contestStatus);
-    const submissions = await getSubmissions(contestStatus);
+    if (contestStatus.status === 'FAILED') {
+        console.error('Failed to fetch contest status: ', contestStatus.comment);
+        process.exit(1);
+    }
+    const handlesIds = await getHandles(contestStatus.result);
+    const submissions = await getSubmissions(contestStatus.result);
 
     return { handlesIds, submissions };
 };
 
-const getHandles = async (contestStatus: ApiResponse<Submission[]>) => {
+const getHandles = async (submissions: Submission[]) => {
     let id = 0;
     const handlesIds: { [handle: string]: number } = {};
-    if (contestStatus.status === 'OK') {
-        contestStatus.result.forEach((result) => {
-            handlesIds[result.author.members[0].handle] = ++id;
-        });
-    }
+    submissions.forEach((submission) => {
+        handlesIds[submission.author.members[0].handle] = ++id;
+    });
     return handlesIds;
 };
 
-const getSubmissions = async (contestStatus: ApiResponse<Submission[]>) => {
-    let submissions: Submission[] = [];
-    if (contestStatus.status === 'OK') {
-        submissions = _.filter( contestStatus.result, (data) => data.author.participantType === 'CONTESTANT');
-    }
+const getSubmissions = async (submissions: Submission[]) => {
+    submissions = _.filter(submissions, (submission) => submission.author.participantType === 'CONTESTANT');
     return submissions;
 };

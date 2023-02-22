@@ -37,13 +37,7 @@ export const generateContestXML = async (
     const submissionsXML = await generateSubmissionsXML(submissions, handlesIds);
     const awardsXML = await generateAwardsXML(awards);
 
-    const contestXML =
-        '<?xml version="1.0" encoding="utf-8"?> <contest>' +
-        contestInfo +
-        problemsXML +
-        teamsXML +
-        submissionsXML +
-        awardsXML +
-        '</contest>';
+    const contestXML = xml([{}], { declaration: true }) +
+        `<contest> ${contestInfo} ${problemsXML} ${teamsXML} ${submissionsXML} ${awardsXML} </contest>`;
     return contestXML;
 };
