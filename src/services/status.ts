@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import CodeforcesClient from '@acmascis/codeforces-client';
 import { ApiResponse } from '@acmascis/codeforces-client/build/interfaces/api-response.interface';
 import { Submission } from '@acmascis/codeforces-client/build/interfaces/submission.interface';
@@ -24,7 +25,7 @@ const getHandles = async (contestStatus: ApiResponse<Submission[]>) => {
 const getSubmissions = async (contestStatus: ApiResponse<Submission[]>) => {
     let submissions: Submission[] = [];
     if (contestStatus.status === 'OK') {
-        submissions = contestStatus.result;
+        submissions = _.filter( contestStatus.result, (data) => data.author.participantType === 'CONTESTANT');
     }
     return submissions;
 };
