@@ -26,8 +26,8 @@ const getExtremeProgrammer = (handlesIds: { [handle: string]: number }, submissi
     const awards: { [id: number]: { teamId: number; citation: string } } = [];
     const sortedSubmissions = _.sortBy(submissions, ['relativeTimeSeconds', 'creationTimeSeconds']);
 
-    const extremeProgrammerHandle = _.find(sortedSubmissions, (data) => data.verdict === 'OK')
-        ?.author.members[0].handle;
+    const extremeProgrammerHandle = _.find(sortedSubmissions, (data) => data.verdict === 'OK')?.author.members[0]
+        .handle;
     awards[++id] = { teamId: handlesIds[extremeProgrammerHandle!], citation: 'Extreme Programmer' };
 
     return awards;
@@ -37,8 +37,8 @@ const getSteadfastGuru = (handlesIds: { [handle: string]: number }, submissions:
     const awards: { [id: number]: { teamId: number; citation: string } } = [];
     const sortedSubmissions = _.sortBy(submissions, ['relativeTimeSeconds', 'creationTimeSeconds']);
 
-    const steadfastGuruHandle = _.findLast(sortedSubmissions, (data) => data.verdict === 'OK')
-        ?.author.members[0].handle;
+    const steadfastGuruHandle = _.findLast(sortedSubmissions, (data) => data.verdict === 'OK')?.author.members[0]
+        .handle;
     awards[++id] = { teamId: handlesIds[steadfastGuruHandle!], citation: 'Steadfast Guru' };
     return awards;
 };

@@ -2,9 +2,11 @@ import xml from 'xml';
 import { Submission } from '@acmascis/codeforces-client/build/interfaces/submission.interface';
 
 export const generateSubmissionsXML = async (submissions: Submission[], handlesIds: { [handle: string]: number }) => {
-    let submissionsXML = '', id = 0;
+    let submissionsXML = '',
+        id = 0;
     submissions.forEach((submission) => {
-        let solved = 'false', verdict = 'WA';
+        let solved = 'false',
+            verdict = 'WA';
         if (submission.verdict === 'OK') {
             solved = 'true';
             verdict = 'ACC';

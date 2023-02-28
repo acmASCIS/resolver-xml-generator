@@ -2,7 +2,7 @@ import fs from 'fs';
 
 export const WriteToXmlFile = async (fileName: string, dataToBeWritten: string) => {
     const path = 'GeneratedXmlFiles';
-    if (!(fs.existsSync(path))) {
+    if (!fs.existsSync(path)) {
         fs.mkdirSync(path);
     }
 
